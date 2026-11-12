@@ -59,7 +59,13 @@ Not a gate. Read on 2026-11-12 between 22:34Z and 22:45Z. This is our own TN10 t
 
 ## Offline rehearsal, recorded before `PRE-RUN-OPEN`
 
-REHEARSAL_PLACEHOLDER
+Rehearsal `p16-a` ran on the desk against the fake node (no network), 2026-11-12 22:44:54Z to 23:05:59Z, with 2-minute lane steps (`STORM_LANE_MIN=2`, `STORM_RET_MIN=2`), using the exact runner, lane, kit23 and family-fee files of this pre-run.
+
+- Genesis 16 of 16 from the published bundle; fee split verified on the submit rows: floor 100, r300 300, esc 150.
+- Lane plan as built: N0 control, then N60 at 150 (side B's reference), then two duel segments, then the N0 drain with esc back at 150.
+- Duel rule: reference A = 59.61 esc hops per family (BASE median), reference B = 1,199 lane landings (HOLD-1 median). Six `DUEL MIN` decisions; the fake node has no contention, so both sides were at or above target and both rates stepped down 150 -> 120 -> 100 and stayed at the floor. This shows the rule writes both rate files and both sides follow them (the esc hops were built at 120 and 100, the lane minutes show 120 and 100); it does not show the step-up path, which only real contention can trigger.
+- One fix before the live run: the reference needed at least min(6, minutes) good minutes, too strict for a short step; it is now min(6, max(1, minutes - 1)). The rehearsal ran with the fixed runner.
+- Every step file, TIMELINE, MEMPOOL and METHOD published to the rehearsal's local origin; `RUNNER_EXIT 0`.
 
 ## Status after the live run
 

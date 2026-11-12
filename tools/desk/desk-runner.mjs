@@ -787,8 +787,8 @@ function duelTick() {
     if (sec < 22 || DUEL.done.has(prevK)) return;
     const cur = segAt.get(curK); if (!cur || !cur.duel) return;
     const cm = cmRead();
-    if (DUEL.refA == null) { const v = (stepKeys.BASE || []).map((k) => cm.get(k)).filter(dGood).map((o) => Number(o.h_esc) / ESCN); if (v.length >= Math.min(6, (stepKeys.BASE || []).length)) { DUEL.refA = dMed(v); dlog(`REF_A esc_hops_per_family=${DUEL.refA.toFixed(2)} from=${v.length}`); } }
-    if (DUEL.refB == null) { const h1 = stepKeys["HOLD-1"] || [], h1k = h1.length > 1 ? h1.slice(1) : h1; const v = h1k.map((k) => cm.get(k)).filter(dGood).map((o) => Number(o.hv)); if (v.length && v.length >= Math.min(6, h1k.length)) { DUEL.refB = dMed(v); dlog(`REF_B lane_landed=${DUEL.refB} from=${v.length}`); } }
+    if (DUEL.refA == null) { const v = (stepKeys.BASE || []).map((k) => cm.get(k)).filter(dGood).map((o) => Number(o.h_esc) / ESCN); if (v.length >= Math.min(6, Math.max(1, (stepKeys.BASE || []).length - 1))) { DUEL.refA = dMed(v); dlog(`REF_A esc_hops_per_family=${DUEL.refA.toFixed(2)} from=${v.length}`); } }
+    if (DUEL.refB == null) { const h1 = stepKeys["HOLD-1"] || [], h1k = h1.length > 1 ? h1.slice(1) : h1; const v = h1k.map((k) => cm.get(k)).filter(dGood).map((o) => Number(o.hv)); if (v.length && v.length >= Math.min(6, Math.max(1, h1k.length - 1))) { DUEL.refB = dMed(v); dlog(`REF_B lane_landed=${DUEL.refB} from=${v.length}`); } }
     const o = cm.get(prevK);
     if (!dGood(o) && sec < 55) return;
     DUEL.done.add(prevK);
