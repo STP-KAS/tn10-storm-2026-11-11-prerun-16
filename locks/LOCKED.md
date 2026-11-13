@@ -500,3 +500,11 @@ These lines are baked into this repo's own pastes. They come from pre-run 15's l
 ## Locked during pre-run 16
 
 When a fix works, append it here, one block per fix, in the form shown above: UTC time, what failed or worked, what was changed, why that change stays.
+
+```
+- 2026-11-13T00:37:41Z.
+- What worked: the fee-escalation duel (kit23 live esc rate, desk-runner duel controller, one rule for both sides). Rehearsed offline first, calibrated at 100 and 2,000 on the node, bot free check run once before arming. Every step, RETURN, TIMELINE, MEMPOOL and METHOD on origin, every whole minute kept pace. 22,258 lane transactions accepted, 0 rejected, 0 lost, 8,711.57 tKAS fees, 834.67 parked (not swept). Every OK family hop included (8,600 / 11,897 / 31,189). Duel: esc 150 -> 294 in three minutes, then a 188-294 band; lane 120-188, mostly down; median esc/lane 1.96; no spiral, nobody gave up; esc back to 93-97 percent of BASE (69 at the lane's rate) at about 69 percent more per hop; the lane's landing did not follow the esc rate (rank correlation -0.04). Mini 219 of 219, 0 late removals. Bot NO SEND no-free-node on time.
+- What failed: the desk probe's getMempoolEntries answered "WebSocket disconnected" from 23:59Z (mempool about 13,000), so ready mass, outside-stream counts and template columns are blank from then. Not repaired during the run (the counter and the duel did not use it).
+- What was changed: nothing during the run. The duel log was copied unchanged to logs/duel.log after the run.
+- Why that change stays, for the next repo: keep the duel controller and its log, pricing on the node's mass, the calibrations, the pre-arm free check, Mini's count and the waiter's fetch handling. Fix or page the probe's mempool read above about 13,000 entries. Refill key 0 first (21,125 usable tKAS left against an 18,000 abort line). A spiral needs two sides that hurt each other: a next duel should put two heavy sides against each other.
+```

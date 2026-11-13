@@ -69,11 +69,22 @@ Rehearsal `p16-a` ran on the desk against the fake node (no network), 2026-11-12
 
 ## Status after the live run
 
-AFTER_PLACEHOLDER
+Read on 2026-11-13 between 00:14Z and 00:41Z. Not a gate.
+
+- **The run finished through RETURN.** The desk runner (started 23:11:56Z) ran BASE, HOLD-1 (the lane's reference), the duel (HOLD-2 and HOLD-3, 36 minutes), the pinned HOLD-4 minute (00:18Z) and RETURN without a repair or a restart, every whole minute kept pace, then stopped on its own (`RUN_STOP return-closed` 00:32:24Z, 5-minute counter tail, `RUN end` 00:37:41Z) and published `counts/chain/TIMELINE.md`, `counts/chain/MEMPOOL.md` and [logs/METHOD.md](logs/METHOD.md). The duel log was copied unchanged to [logs/duel.log](logs/duel.log) after the run. No runner process was left on the desk. The private TN10 kaspad (2.1.0) was not stopped. No devnet, `KaspaPublicNode` or miner was started; `serve.mjs` and its keeper were not touched.
+- The duel settled: side A (esc) went 150 → 294 in three minutes and then cycled between 188 and 294; side B (our lane) moved between 120 and 188, mostly down; median esc ÷ lane rate 1.96. No spiral; neither side gave up. See [logs/LESSONS.md](logs/LESSONS.md).
+- Our heavy lane: `LANE_END` 00:32:25Z, 22,258 accepted of 22,258, 0 rejected, 0 lost, 8,711.57 tKAS fees, 834.67 tKAS parked on our sink key (not swept), nothing pending. The 80-block hold never tripped.
+- Every OK family hop was included (floor 8,600, r300 11,897, esc 31,189).
+- The desk probe's mempool read failed from 23:59Z (`getMempoolEntries`: WebSocket disconnected, mempool about 13,000); ready mass, outside-stream counts and template columns are blank from then. The counter and the duel did not use the probe.
+- Mini: the runner (MINI-ARMED 23:10:56Z) published a second read for every step, each read in full, and matched the desk in 219 of 219 cohort cells with 0 late removals. Its TN10 kaspad was not wiped or restarted.
+- Bot: `NO SEND no-free-node`, on time. The waiter read HOLD-3 2 s after origin, pinned 00:18Z, its free check ran 00:17:20–00:17:30Z (before the minute): the kept nodes 1 and 5 were 2 kaspads and every other answering endpoint was the same kaspad as a kept one. Pushed 00:19:04Z. Nothing was sent by the bot.
+- Keys after the run (read-only status, 00:40Z): key 0 3,124 coins over 3 tKAS but only 21,125 usable tKAS (abort line 18,000), 329 small coins; payment pile 7,074 coins over 10 tKAS; keys 1–15 have no genesis coin left.
+- The outside heavy fee-100 stream was present from 23:24Z to the end. We do not say who sends it.
+- Results: [logs/LESSONS.md](logs/LESSONS.md), [logs/METHOD.md](logs/METHOD.md), [logs/duel.log](logs/duel.log), and the pre-run 16 block in [locks/LOCKED.md](locks/LOCKED.md).
 
 ### Public statement
 
-We run our own heavy lane on TN10 in this pre-run, with the operator's OK, at N = 60: 12 minutes at 150 and then 36 minutes at rates our duel rule sets between 100 and 2,000 sompi/gram. While it runs, other TN10 users' transactions paying up to about the lane's rate wait longer on the nodes that see it. The figures for this run are added here after it. This is our own testing; tKAS has no value.
+We run our own heavy lane on TN10 in this pre-run, with the operator's OK, at N = 60: 12 minutes at 150 and then 36 minutes at rates our duel rule sets between 100 and 2,000 sompi/gram. While it runs, other TN10 users' transactions paying up to about the lane's rate wait longer on the nodes that see it. In this run, in the 48 lane minutes (the lane mostly at 120–150, at most 188), other traffic landed on our desk node had a median of about 3,110–3,170 a minute against about 3,510–3,690 with the lane at 0 after it (about 11–12 percent lower; the outside stream's own landings are in that figure, so we cannot separate the two cleanly), the node's priority fee estimate read a median of 381–387 instead of 189 (BASE) and 214–220 (after), and our own hops at 100, a stand-in for a low-fee user, ran at 38–42 percent of their BASE pace. The backlog of other users' transactions at 100 sompi/gram in the desk mempool grew to about 12,400 by the last minute the probe could read it, and the mempool was still about 18,400 at the end. The lane was stepped down to zero at the end and its own 50 waiting transactions cleared within a minute. This is our own testing; tKAS has no value.
 
 ## When something breaks
 
